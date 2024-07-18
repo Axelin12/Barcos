@@ -38,6 +38,7 @@ class Bala {
         setTimeout(() => {
             Matter.World.remove(world, this.body)
             delete balas[index]
+            
         }, 1000);
     }
 }

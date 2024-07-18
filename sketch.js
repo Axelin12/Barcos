@@ -6,6 +6,7 @@ var barcos = []
 var barcoNavegando = []
 var barcoRoto = []
 var balaSplash = []
+var puntaje = 0;
 function preload() {
   bg = loadImage("./assets/background.gif")
   torre = loadImage("./assets/tower.png")
@@ -48,6 +49,10 @@ function draw() {
   imageMode(CENTER)
   image(torre, tower.position.x, tower.position.y, 160, 310)
   pop()
+  fill("brown")
+  textSize(40)
+  text("Puntuacion : "+ puntaje, width*0.5,150)
+  textAlign(CENTER,CENTER)
   for (var i = 0; i < balas.length; i++) {
     if (balas[i]){
     balas[i].display();
@@ -60,6 +65,7 @@ function draw() {
   }
   cannon.display()
   mostrarBarcos()
+  
 }
 function keyPressed() {
   if (keyCode == "32") {
@@ -79,8 +85,8 @@ function keyReleased() {
 
 function mostrarBarcos() {
   if (barcos.length > 0) {
-    if (barcos[barcos.length - 1]&& barcos[barcos.length - 1].body.position.x < width - 500) {
-      barco = new Barco(width + random(-40, -80, -120, -160), height - 100, 170, 170, barcoNavegando);
+    if (barcos[barcos.length - 1]&& barcos[barcos.length - 1].body.position.x < width - 500 || (barcos[barcos.length]== undefined && barcos.length <4)) {
+      barco = new Barco(width + random([-40, -80, -120, -160]), height - 100, 170, 170, barcoNavegando);
       barcos.push(barco);
     }
   for (var i = 0; i < barcos.length; i++) {
@@ -102,12 +108,30 @@ function colision(index){
     if (balas[index] !== undefined && barcos[i] !== undefined) {
       var collision = Matter.SAT.collides(balas[index].body, barcos[i].body);
 
-      if (collision.collided) {
+      if (collision.collided && !barcos[i].hundido) {
+        barcos[i].hundido = true
         barcos[i].destruir(i);
-
+        puntaje+= 5
         Matter.World.remove(world, balas[index].body);
         delete balas[index];
       }
     }
+    var collision = Matter.SAT.collides(tower, barcos[i].body);
+
+      if (collision.collided && !barcos[i].hundido) {
+       Gameover();
+      }
   }
+}
+function Gameover (){
+  Swal.fire({
+    icon: "error",
+    title: "Oops...",
+    text: "Has Perdido!",
+    confirmButtonText: "Reiniciar",
+}).then((result) => {
+  if (result.isConfirmed) {
+    location.reload()
+  }
+});
 }

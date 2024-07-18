@@ -10,6 +10,7 @@ class Barco {
         this.image = loadImage("./assets/boat.png")
         this.animation = ani
         this.speedAni = 0.05
+        this.hundido = false
         World.add(world, this.body);
      
     }
@@ -32,7 +33,8 @@ class Barco {
         this.ancho= 300
         this.alto = 300
         setTimeout(()=>{Matter.World.remove(world,this.body);
-            delete barcos[i]
+            //delete barcos[i]
+            barcos.splice(i,1)
         }, 2000)
     }
 }
