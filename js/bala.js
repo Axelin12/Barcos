@@ -34,11 +34,11 @@ class Bala {
     }
     balaDestruir(index){
         Matter.Body.setVelocity(this.body, {x:0, y:0})
-        this.animacion = balaSplash
+        this.animation = balaSplash
         setTimeout(() => {
             Matter.World.remove(world, this.body)
             delete balas[index]
-            
+
         }, 1000);
     }
 }

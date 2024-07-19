@@ -39,6 +39,12 @@ function setup() {
     var img= barcoRIP.get(pos.x, pos.y,pos.w, pos.h)
     barcoRoto.push(img)
   }
+  frames = balajson.frames
+  for(i = 0; i < frames.length; i++){
+    var pos = frames [i].position
+    var img= balaAni.get(pos.x, pos.y,pos.w, pos.h)
+    balaSplash.push(img)
+  }
 }
 
 function draw() {
@@ -86,7 +92,7 @@ function keyReleased() {
 function mostrarBarcos() {
   if (barcos.length > 0) {
     if (barcos[barcos.length - 1]&& barcos[barcos.length - 1].body.position.x < width - 500 || (barcos[barcos.length]== undefined && barcos.length <4)) {
-      barco = new Barco(width + random([-40, -80, -120, -160]), height - 100, 170, 170, barcoNavegando);
+      barco = new Barco(width + random([40, 80, 120, 160]), height - 100, 170, 170, barcoNavegando);
       barcos.push(barco);
     }
   for (var i = 0; i < barcos.length; i++) {

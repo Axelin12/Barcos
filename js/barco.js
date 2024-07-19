@@ -33,8 +33,8 @@ class Barco {
         this.ancho= 300
         this.alto = 300
         setTimeout(()=>{Matter.World.remove(world,this.body);
-            //delete barcos[i]
-            barcos.splice(i,1)
+            delete barcos[i]
+            //barcos.splice(i,1)
         }, 2000)
     }
 }
